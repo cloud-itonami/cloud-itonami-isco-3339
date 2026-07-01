@@ -1,0 +1,10 @@
+{:itonami.blueprint/id "cloud-itonami-isco-3339"
+ :itonami.blueprint/name "Independent Business Services Agency Practice"
+ :itonami.blueprint/isco-08 "3339"
+ :itonami.blueprint/domain :services/business-services-agency
+ :itonami.blueprint/license "AGPL-3.0-or-later"
+ :itonami.blueprint/social-impact [:local-jobs :small-business-support :accountability]
+ :itonami.blueprint/governor :business-services-governor
+ :itonami.blueprint/robotics true
+ :itonami.blueprint/required-technologies [:robotics :identity :forms :dmn :bpmn :audit-ledger]
+ :itonami.blueprint/status :public-oss}
