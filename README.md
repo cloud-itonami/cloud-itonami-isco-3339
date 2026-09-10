@@ -62,17 +62,17 @@ human-in-the-loop interrupt/resume via checkpointing.
                                            +-> :hold               (:hard? true)
 ```
 
-- `src/business_services_agency/store.cljc` — `Store` protocol +
+- `src/business_services_agency/store.kotoba` — `Store` protocol +
   `MemStore`: registered clients, committed records, an append-only
   audit ledger.
-- `src/business_services_agency/advisor.cljc` — `Advisor` protocol;
+- `src/business_services_agency/advisor.kotoba` — `Advisor` protocol;
   `mock-advisor` (deterministic, default) proposes an agency operation
   from a request; `llm-advisor` wraps a `langchain.model/ChatModel` —
   either way the advisor only ever produces a `:propose`-effect
   proposal, never a committed record, and LLM parse failures always
   yield `confidence 0.0` (forces escalation, never fabricated
   confidence).
-- `src/business_services_agency/governor.cljc` —
+- `src/business_services_agency/governor.kotoba` —
   `BusinessServicesGovernor/check`: a pure function, wired as its own
   `:govern` node. Hard invariants (unregistered client, a proposal
   whose `:effect` isn't `:propose`) always route to `:hold`. Escalation
@@ -82,7 +82,7 @@ human-in-the-loop interrupt/resume via checkpointing.
   on explicit human approval (`actor/approve!`), matching the README's
   robotics-premise statement that handling client funds and brokering
   contracts above a threshold value always require human sign-off.
-- `src/business_services_agency/actor.cljc` — `build-graph`,
+- `src/business_services_agency/actor.kotoba` — `build-graph`,
   `run-request!`, `approve!`: the `langgraph.graph/state-graph` wiring
   itself.
 
