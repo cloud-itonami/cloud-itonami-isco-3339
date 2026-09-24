@@ -1,0 +1,33 @@
+;; What this occupation's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; README "Robotics premise": a document-handling robot performs client-record
+;; scanning and filing for agency transactions (ISCO 3339 business services
+;; agents not elsewhere classified). Its physical work: loading paper stacks
+;; into the scanner feeder, and couriering filed client records to the
+;; records room.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isco-3339"
+ :cases
+ [{:id :stack-into-scanner-feeder
+   :kind :manipulator
+   :procedure "arm lifts a stack of client records from the intake tray into the document scanner's feeder"
+   :params {:l1-m 0.35 :l2-m 0.30 :m1-kg 2.5 :m2-kg 1.8
+            :from [0.45 0.05] :to [0.20 0.40] :duration-s 1.5 :steps 300}
+   :sweep {:param :payload-kg :values [0.25 0.5 1.0 2.0 3.0]}
+   :quantity :peak-tau1-nm
+   :limit {:max 22.0 :basis "estimate: continuous shoulder torque of a ~2 kg-payload desktop arm"}
+   :boundary {:lo 0.05 :hi 10.0}}
+  {:id :records-cart-to-records-room
+   :kind :transport
+   :procedure "robot pushes a cart of filed client records 35 m to the records room"
+   :params {:mass-kg 45.0 :distance-m 35.0 :v-max-mps 1.0 :a-max-mps2 0.5
+            :brake-decel-mps2 0.8 :drive-force-n 90.0 :crr 0.02
+            :cog-height-m 0.60 :support-half-length-m 0.28}
+   :sweep {:param :payload-kg :values [10.0 30.0 60.0 100.0 150.0]}
+   :quantity :cycle-time-s
+   :limit {:max 45.0 :basis "estimate: one run fits between scanner batches (about 45 s of scanner idle)"}
+   :boundary {:lo 5.0 :hi 400.0}}]}
